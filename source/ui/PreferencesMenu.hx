@@ -83,8 +83,9 @@ class PreferencesMenu extends ui.OptionsState.Page
 		FlxG.sound.muted = true;
 		#end
 
-		if (!getPref('fps-counter'))
-			FlxG.stage.removeChild(Main.fpsCounter);
+		Main.fpsCounter.visible = getPref('fps-counter');
+		//if (!getPref('fps-counter'))
+			//FlxG.stage.removeChild(Main.fpsCounter);
 
 		FlxG.autoPause = getPref('auto-pause');
 	}
@@ -138,10 +139,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		switch (prefName)
 		{
 			case 'fps-counter':
-				if (getPref('fps-counter'))
-					FlxG.stage.addChild(Main.fpsCounter);
-				else
-					FlxG.stage.removeChild(Main.fpsCounter);
+				Main.fpsCounter.visible = getPref('fps-counter');//FlxG.stage.removeChild(Main.fpsCounter);
 			case 'auto-pause':
 				FlxG.autoPause = getPref('auto-pause');
 		}
