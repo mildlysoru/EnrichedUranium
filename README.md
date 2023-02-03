@@ -1,7 +1,8 @@
 # Friday Night Funkin
 
-## Note: This readme has been updated to reflect the fixes made in this fork.
-## TL;DR: Install hxCodec and update all haxe libraries.
+**Note: This readme has been updated to reflect the fixes made in this fork.**
+
+**TL;DR: Install hxCodec and update all haxe libraries.**
 
 This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
 
@@ -45,7 +46,7 @@ newgrounds
 hxCodec (new requirement for video cutscenes on desktop build)
 ```
 
-### If these are already installed, update them.
+**If these are already installed, update them.**
 
 So for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`
 
