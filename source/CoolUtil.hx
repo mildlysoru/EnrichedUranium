@@ -63,4 +63,13 @@ class CoolUtil
 	{
 		return FlxMath.lerp(a, b, camLerpShit(ratio));
 	}
+
+	public static function openURL(url:String)
+	{
+		#if linux
+		Sys.command('/usr/bin/xdg-open', [url, "&"]);
+		#else
+		FlxG.openURL(url);
+		#end
+	}
 }
