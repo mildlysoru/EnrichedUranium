@@ -70,8 +70,15 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
-		// FlxG.bitmap.clearCache();
+		var modFolders:Array<String> = [];
+		for (file in FileSystem.readDirectory("mods"))
+		{
+			if (FileSystem.isDirectory("mods/" + file))
+				modFolders.push(file);
+		}
+		trace("mods loaded: "+modFolders);
+		polymod.Polymod.init({modRoot: "mods", dirs: modFolders, framework: OPENFL});
+		//FlxG.bitmap.clearCache();
 		#end
 
 		startedIntro = false;
@@ -89,7 +96,7 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('funkin', 'nullfrequency');
 		PreferencesMenu.initPrefs();
 		PlayerSettings.init();
 		Highscore.load();
@@ -353,16 +360,14 @@ class TitleState extends MusicBeatState
 			FlxG.switchState(new CutsceneAnimTestState());
 		#end
 
-		/* 
-			if (FlxG.keys.justPressed.R)
-			{
-				#if polymod
-				polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-				trace('reinitialized');
-				#end
-			}
 
-		 */
+// 		if (FlxG.keys.justPressed.R)
+// 		{
+// 			#if polymod
+// 			polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
+// 			trace('reinitialized');
+// 			#end
+// 		}
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;

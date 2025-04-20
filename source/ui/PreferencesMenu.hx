@@ -75,7 +75,7 @@ class PreferencesMenu extends ui.OptionsState.Page
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
-		preferenceCheck('auto-pause', false);
+		preferenceCheck('auto-pause', true);
 		preferenceCheck('master-volume', 1);
 
 		#if muted
