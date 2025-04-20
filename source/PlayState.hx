@@ -46,6 +46,7 @@ import shaderslmfao.BuildingShaders.BuildingShader;
 import shaderslmfao.BuildingShaders;
 import shaderslmfao.ColorSwap;
 import ui.PreferencesMenu;
+import hxcodec.flixel.FlxVideo;
 
 using StringTools;
 
@@ -938,15 +939,19 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/ughCutscene.mp4');
-		vid.finishCallback = function()
+		var vid:FlxVideo = new FlxVideo();
+		vid.play(Paths.file('music/ughCutscene.mp4'));
+		vid.onEndReached.add(
+		function()
 		{
-			trace("FINISHED VIDEO");
 			remove(blackShit);
+
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+			vid.dispose();
+		}
+		);
 
 		FlxG.camera.zoom = defaultCamZoom * 1.2;
 
@@ -1025,15 +1030,19 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/gunsCutscene.mp4');
-		vid.finishCallback = function()
+		var vid:FlxVideo = new FlxVideo();
+		vid.play(Paths.file('music/gunsCutscene.mp4'));
+		vid.onEndReached.add(
+		function()
 		{
 			remove(blackShit);
 
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+			vid.dispose();
+		}
+		);
 
 		/* camFollow.setPosition(camPos.x, camPos.y);
 
@@ -1099,15 +1108,19 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/stressCutscene.mp4');
-		vid.finishCallback = function()
+		var vid:FlxVideo = new FlxVideo();
+		vid.play(Paths.file('music/stressCutscene.mp4'));
+		vid.onEndReached.add(
+		function()
 		{
 			remove(blackShit);
 
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+			vid.dispose();
+		}
+		);
 
 		/* camHUD.visible = false;
 
@@ -1995,6 +2008,11 @@ class PlayState extends MusicBeatState
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
 			endSong();
+		if (FlxG.keys.justPressed.PAGEUP)
+			changeSection(1);
+		if (FlxG.keys.justPressed.PAGEDOWN)
+			changeSection(-1);
+		#end
 		if (FlxG.keys.justPressed.EIGHT)
 		{
 			/* 	 8 for opponent char
@@ -2008,11 +2026,6 @@ class PlayState extends MusicBeatState
 			else
 				FlxG.switchState(new AnimationDebug(SONG.player2));
 		}
-		if (FlxG.keys.justPressed.PAGEUP)
-			changeSection(1);
-		if (FlxG.keys.justPressed.PAGEDOWN)
-			changeSection(-1);
-		#end
 
 		if (generatedMusic && SONG.notes[Std.int(curStep / 16)] != null)
 		{

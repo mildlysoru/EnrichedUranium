@@ -31,11 +31,8 @@ class OptionsState extends MusicBeatState
 		var options = addPage(Options, new OptionsMenu(false));
 		var preferences = addPage(Preferences, new PreferencesMenu());
 		var controls = addPage(Controls, new ControlsMenu());
-		// var colors = addPage(Colors, new ColorsMenu());
-
-		#if cpp
-		var mods = addPage(Mods, new ModMenu());
-		#end
+		//var colors = addPage(Colors, new ColorsMenu());
+		//var mods = addPage(Mods, new ModMenu());
 
 		if (options.hasMultipleOptions())
 		{
@@ -180,10 +177,8 @@ class OptionsMenu extends Page
 		add(items = new TextMenuList());
 		createItem('preferences', function() switchPage(Preferences));
 		createItem("controls", function() switchPage(Controls));
-		// createItem('colors', function() switchPage(Colors));
-		#if cpp
+		//createItem('colors', function() switchPage(Colors));
 		//createItem('mods', function() switchPage(Mods));
-		#end
 
 		#if CAN_OPEN_LINKS
 		if (showDonate)
