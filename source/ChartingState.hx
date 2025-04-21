@@ -159,7 +159,7 @@ class ChartingState extends MusicBeatState
 		add(dummyArrow);
 
 		var tabs = [
-			{name: "Editor", label: "Editor"}
+			{name: "Editor", label: "Editor"},
 			{name: "Song", label: 'Song'},
 			{name: "Section", label: 'Section'},
 			{name: "Note", label: 'Note'}
@@ -200,39 +200,42 @@ class ChartingState extends MusicBeatState
 	{
 		var colors:Array<String> = ["WHITE","BLUE","BROWN","CYAN","GRAY","GREEN","LIME","MAGENTA","ORANGE","PINK","PURPLE","RED", "YELLOW"];
 
-		var colorDropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(color:String)
+		var colorDropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(colors, true), function(color:String)
 		{
 			switch (color)
 			{
-				"WHITE":
+				case "WHITE":
 					setTheme(FlxColor.WHITE);
-				"BLUE":
+				case "BLUE":
 					setTheme(FlxColor.BLUE);
-				"BROWN":
+				case "BROWN":
 					setTheme(FlxColor.BROWN);
-				"CYAN":
+				case "CYAN":
 					setTheme(FlxColor.CYAN);
-				"GRAY":
+				case "GRAY":
 					setTheme(FlxColor.GRAY);
-				"GREEN":
+				case "GREEN":
 					setTheme(FlxColor.GREEN);
-				"LIME":
+				case "LIME":
 					setTheme(FlxColor.LIME);
-				"MAGENTA":
+				case "MAGENTA":
 					setTheme(FlxColor.MAGENTA);
-				"ORANGE":
+				case "ORANGE":
 					setTheme(FlxColor.ORANGE);
-				"PINK":
+				case "PINK":
 					setTheme(FlxColor.PINK);
-				"PURPLE":
+				case "PURPLE":
 					setTheme(FlxColor.PURPLE);
-				"RED":
+				case "RED":
 					setTheme(FlxColor.RED);
-				"YELLOW":
+				case "YELLOW":
 					setTheme(FlxColor.YELLOW);
 			}
 		});
 		colorDropDown.selectedLabel = "WHITE";
+
+		UI_box.addGroup(tab_group_editor);
+		UI_box.scrollFactor.set();
 	}
 
 	function addSongUI():Void
