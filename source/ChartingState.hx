@@ -40,6 +40,11 @@ class ChartingState extends MusicBeatState
 
 	var UI_box:FlxUITabMenu;
 
+	var tab_group_note:FlxUI;
+	var tab_group_section:FlxUI;
+	var tab_group_song:FlxUI;
+	var tab_group_editor:FlxUI;
+
 	/**
 	 * Array of notes showing when each section STARTS in STEPS
 	 * Usually rounded up??
@@ -86,6 +91,8 @@ class ChartingState extends MusicBeatState
 		curSection = lastSection;
 
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
+		gridBG.x = 480;
+		gridBG.y = 40;
 		add(gridBG);
 
 		leftIcon = new HealthIcon('bf');
@@ -93,16 +100,18 @@ class ChartingState extends MusicBeatState
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
 
-		leftIcon.setGraphicSize(0, 45);
-		rightIcon.setGraphicSize(0, 45);
+		leftIcon.setGraphicSize(0, 40);
+		rightIcon.setGraphicSize(0, 40);
 
 		add(leftIcon);
 		add(rightIcon);
 
-		leftIcon.setPosition(0, -100);
-		rightIcon.setPosition(gridBG.width / 2, -100);
+		leftIcon.setPosition(0, -55);
+		rightIcon.setPosition(0, -55);
+		leftIcon.x = gridBG.x+(GRID_SIZE*4-leftIcon.width)-4;
+		rightIcon.x = gridBG.x+(GRID_SIZE*8-rightIcon.width)-4;
 
-		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + gridBG.width / 2).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
+		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + (gridBG.width / 2) - 0.5,40).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		add(gridBlackLine);
 
 		curRenderedNotes = new FlxTypedGroup<Note>();
@@ -125,7 +134,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		FlxG.mouse.visible = true;
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('funkin', 'nullfrequency');
 
 		tempBpm = _song.bpm;
 
@@ -143,13 +152,14 @@ class ChartingState extends MusicBeatState
 		bpmTxt.scrollFactor.set();
 		add(bpmTxt);
 
-		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(FlxG.width / 2), 4);
+		strumLine = new FlxSprite(gridBG.x, 40).makeGraphic(Std.int(GRID_SIZE*8), 4);
 		add(strumLine);
 
 		dummyArrow = new FlxSprite().makeGraphic(GRID_SIZE, GRID_SIZE);
 		add(dummyArrow);
 
 		var tabs = [
+			{name: "Editor", label: "Editor"}
 			{name: "Song", label: 'Song'},
 			{name: "Section", label: 'Section'},
 			{name: "Note", label: 'Note'}
@@ -158,10 +168,11 @@ class ChartingState extends MusicBeatState
 		UI_box = new FlxUITabMenu(null, tabs, true);
 
 		UI_box.resize(300, 400);
-		UI_box.x = FlxG.width / 2;
-		UI_box.y = 20;
+		UI_box.x = FlxG.width - UI_box.width - 40;
+		UI_box.y = 40;
 		add(UI_box);
 
+		addEditorUI();
 		addSongUI();
 		addSectionUI();
 		addNoteUI();
@@ -170,7 +181,58 @@ class ChartingState extends MusicBeatState
 		add(curRenderedSustains);
 
 		changeSection();
+
+		setTheme(FlxColor.WHITE);
+
 		super.create();
+	}
+
+	function setTheme(themeColor:FlxColor):Void
+	{
+		UI_box.color = themeColor;
+		tab_group_note.color = themeColor;
+		tab_group_section.color = themeColor;
+		tab_group_song.color = themeColor;
+		tab_group_editor.color = themeColor;
+	}
+
+	function addEditorUI():Void
+	{
+		var colors:Array<String> = ["WHITE","BLUE","BROWN","CYAN","GRAY","GREEN","LIME","MAGENTA","ORANGE","PINK","PURPLE","RED", "YELLOW"];
+
+		var colorDropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(color:String)
+		{
+			switch (color)
+			{
+				"WHITE":
+					setTheme(FlxColor.WHITE);
+				"BLUE":
+					setTheme(FlxColor.BLUE);
+				"BROWN":
+					setTheme(FlxColor.BROWN);
+				"CYAN":
+					setTheme(FlxColor.CYAN);
+				"GRAY":
+					setTheme(FlxColor.GRAY);
+				"GREEN":
+					setTheme(FlxColor.GREEN);
+				"LIME":
+					setTheme(FlxColor.LIME);
+				"MAGENTA":
+					setTheme(FlxColor.MAGENTA);
+				"ORANGE":
+					setTheme(FlxColor.ORANGE);
+				"PINK":
+					setTheme(FlxColor.PINK);
+				"PURPLE":
+					setTheme(FlxColor.PURPLE);
+				"RED":
+					setTheme(FlxColor.RED);
+				"YELLOW":
+					setTheme(FlxColor.YELLOW);
+			}
+		});
+		colorDropDown.selectedLabel = "WHITE";
 	}
 
 	function addSongUI():Void
@@ -240,7 +302,7 @@ class ChartingState extends MusicBeatState
 		});
 		player2DropDown.selectedLabel = _song.player2;
 
-		var tab_group_song = new FlxUI(null, UI_box);
+		tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
 		tab_group_song.add(UI_songTitle);
 
@@ -258,7 +320,7 @@ class ChartingState extends MusicBeatState
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
 
-		FlxG.camera.follow(strumLine);
+		//FlxG.camera.follow(strumLine);
 	}
 
 	var stepperLength:FlxUINumericStepper;
@@ -269,7 +331,7 @@ class ChartingState extends MusicBeatState
 
 	function addSectionUI():Void
 	{
-		var tab_group_section = new FlxUI(null, UI_box);
+		tab_group_section = new FlxUI(null, UI_box);
 		tab_group_section.name = 'Section';
 
 		stepperLength = new FlxUINumericStepper(10, 10, 4, 0, 0, 999, 0);
@@ -328,7 +390,7 @@ class ChartingState extends MusicBeatState
 
 	function addNoteUI():Void
 	{
-		var tab_group_note = new FlxUI(null, UI_box);
+		tab_group_note = new FlxUI(null, UI_box);
 		tab_group_note.name = 'Note';
 
 		stepperSusLength = new FlxUINumericStepper(10, 10, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * 16);
@@ -880,15 +942,27 @@ class ChartingState extends MusicBeatState
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
-			note.x = Math.floor(daNoteInfo * GRID_SIZE);
+			note.x = Math.floor(daNoteInfo * GRID_SIZE) + gridBG.x;
 			note.y = Math.floor(getYfromStrum((daStrumTime - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps)));
 
 			curRenderedNotes.add(note);
 
 			if (daSus > 0)
 			{
-				var sustainVis:FlxSprite = new FlxSprite(note.x + (GRID_SIZE / 2),
+				var sustainVis:FlxSprite = new FlxSprite(note.x + (GRID_SIZE / 2)-4,
 					note.y + GRID_SIZE).makeGraphic(8, Math.floor(FlxMath.remapToRange(daSus, 0, Conductor.stepCrochet * 16, 0, gridBG.height)));
+				switch (daNoteInfo % 4)
+				{
+					case 0:
+						sustainVis.color = 0xFFC24B99;
+					case 1:
+						sustainVis.color = 0xFF00FFFF;
+					case 2:
+						sustainVis.color = 0xFF12FA05;
+					case 3:
+						sustainVis.color = 0xFFF9393F;
+				}
+
 				curRenderedSustains.add(sustainVis);
 			}
 		}
@@ -961,7 +1035,7 @@ class ChartingState extends MusicBeatState
 	private function addNote():Void
 	{
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
-		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
+		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE)-12;
 		var noteSus = 0;
 		var noteAlt = false;
 
