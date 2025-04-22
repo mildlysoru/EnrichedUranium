@@ -32,6 +32,10 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 
+import openfl.system.System;
+import openfl.desktop.Clipboard;
+import openfl.desktop.ClipboardFormats;
+
 using StringTools;
 
 class ChartingState extends MusicBeatState
@@ -168,7 +172,7 @@ class ChartingState extends MusicBeatState
 		UI_box = new FlxUITabMenu(null, tabs, true);
 
 		UI_box.resize(300, 400);
-		UI_box.x = FlxG.width - UI_box.width - 40;
+		UI_box.x = FlxG.width - UI_box.width - 80;
 		UI_box.y = 40;
 		add(UI_box);
 
@@ -177,12 +181,14 @@ class ChartingState extends MusicBeatState
 		addSectionUI();
 		addNoteUI();
 
+		UI_box.selected_tab = 3;
+
 		add(curRenderedNotes);
 		add(curRenderedSustains);
 
 		changeSection();
 
-		setTheme(FlxColor.WHITE);
+		//colorFromDropdown("CYAN");
 
 		super.create();
 	}
@@ -194,45 +200,75 @@ class ChartingState extends MusicBeatState
 		tab_group_section.color = themeColor;
 		tab_group_song.color = themeColor;
 		tab_group_editor.color = themeColor;
+
+		trace("theme has been applied: "+themeColor);
+
+		/*
+		for (object in UI_box)
+		{
+			if (Std.isOfType(object,FlxText))
+			{
+				object.color = FlxColor.BLACK;
+			}
+			if (Std.isOfType(object,FlxUIInputText))
+			{
+				object.color = FlxColor.BLACK;
+			}
+			if (Std.isOfType(object,FlxUIDropDownMenu))
+			{
+				object.color = FlxColor.BLACK;
+			}
+		}
+		*/
+	}
+
+	function colorFromDropdown(color:String):Void
+	{
+		switch (color)
+		{
+			case "WHITE":
+				setTheme(0xFFFFFFFF);
+			case "GRAY":
+				setTheme(0xFF808080);
+			case "BLUE":
+				setTheme(0xFF0000FF);
+			case "CYAN":
+				setTheme(0xFF00FFFF);
+			case "GREEN":
+				setTheme(0xFF008000);
+			case "LIME":
+				setTheme(0xFF00FF00);
+			case "RED":
+				setTheme(0xFFFF0000);
+			case "ORANGE":
+				setTheme(0xFFFFA500);
+			case "YELLOW":
+				setTheme(0xFFFFFF00);
+			case "BROWN":
+				setTheme(0xFF8B4513);
+			case "PURPLE":
+				setTheme(0xFF800080);
+			case "PINK":
+				setTheme(0xFFFFC0CB);
+			case "MAGENTA":
+				setTheme(0xFFFF00FF);
+		}
 	}
 
 	function addEditorUI():Void
 	{
-		var colors:Array<String> = ["WHITE","BLUE","BROWN","CYAN","GRAY","GREEN","LIME","MAGENTA","ORANGE","PINK","PURPLE","RED", "YELLOW"];
+		var colors:Array<String> = ["WHITE","GRAY","BLUE","CYAN","GREEN","LIME","RED","ORANGE","YELLOW", "BROWN","PURPLE","PINK","MAGENTA"];
 
-		var colorDropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(colors, true), function(color:String)
+		var colorDropDown = new FlxUIDropDownMenu(UI_box.width/2-60, 10, FlxUIDropDownMenu.makeStrIdLabelArray(colors, true), function(color:String)
 		{
-			switch (color)
-			{
-				case "WHITE":
-					setTheme(FlxColor.WHITE);
-				case "BLUE":
-					setTheme(FlxColor.BLUE);
-				case "BROWN":
-					setTheme(FlxColor.BROWN);
-				case "CYAN":
-					setTheme(FlxColor.CYAN);
-				case "GRAY":
-					setTheme(FlxColor.GRAY);
-				case "GREEN":
-					setTheme(FlxColor.GREEN);
-				case "LIME":
-					setTheme(FlxColor.LIME);
-				case "MAGENTA":
-					setTheme(FlxColor.MAGENTA);
-				case "ORANGE":
-					setTheme(FlxColor.ORANGE);
-				case "PINK":
-					setTheme(FlxColor.PINK);
-				case "PURPLE":
-					setTheme(FlxColor.PURPLE);
-				case "RED":
-					setTheme(FlxColor.RED);
-				case "YELLOW":
-					setTheme(FlxColor.YELLOW);
-			}
+			trace("color applied: "+ color);
+			colorFromDropdown(color);
 		});
 		colorDropDown.selectedLabel = "WHITE";
+
+		tab_group_editor = new FlxUI(null, UI_box);
+		tab_group_editor.name = "Editor";
+		tab_group_editor.add(colorDropDown);
 
 		UI_box.addGroup(tab_group_editor);
 		UI_box.scrollFactor.set();
@@ -267,6 +303,21 @@ class ChartingState extends MusicBeatState
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
+		});
+
+		var clipboardButton:FlxButton = new FlxButton(saveButton.x, 38, "Copy to Clipboard", function()
+		{
+			var json = {
+			"song": _song
+			};
+
+			var data:String = Json.stringify(json);
+
+			if ((data != null) && (data.length > 0))
+			{
+				Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT, data);
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+			}
 		});
 
 		var reloadSong:FlxButton = new FlxButton(saveButton.x + saveButton.width + 10, saveButton.y, "Reload Audio", function()
@@ -312,6 +363,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
 		tab_group_song.add(saveButton);
+		tab_group_song.add(clipboardButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
 		tab_group_song.add(loadAutosaveBtn);
@@ -443,7 +495,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		// general shit
-		var title:FlxText = new FlxText(UI_box.x + 20, UI_box.y + 20, 0);
+		var title:FlxText = new FlxText(40, 40, 0);
 		bullshitUI.add(title);
 		/* 
 			var loopCheck = new FlxUICheckBox(UI_box.x + 10, UI_box.y + 50, null, null, "Loops", 100, ['loop check']);
@@ -633,12 +685,12 @@ class ChartingState extends MusicBeatState
 			{
 				UI_box.selected_tab -= 1;
 				if (UI_box.selected_tab < 0)
-					UI_box.selected_tab = 2;
+					UI_box.selected_tab = 3;
 			}
 			else
 			{
 				UI_box.selected_tab += 1;
-				if (UI_box.selected_tab >= 3)
+				if (UI_box.selected_tab >= 4)
 					UI_box.selected_tab = 0;
 			}
 		}
