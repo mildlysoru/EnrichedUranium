@@ -131,7 +131,6 @@ class PlayState extends MusicBeatState
 	#end
 
 	var camPos:FlxPoint;
-	var lightFadeShader:BuildingShaders;
 
 	var stage:Stage;
 

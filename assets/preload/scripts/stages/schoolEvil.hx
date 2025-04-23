@@ -1,4 +1,4 @@
-flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.effects.chainable.FlxWaveMode;
 
 function create()

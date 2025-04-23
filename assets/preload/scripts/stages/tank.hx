@@ -2,6 +2,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import TankmenBG;
 import flixel.FlxG;
+import flixel.math.FlxAngle;
 
 var tankResetShit:Bool = false;
 var tankMoving:Bool = false;

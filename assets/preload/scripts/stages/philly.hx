@@ -1,3 +1,6 @@
+import shaderslmfao.BuildingShaders.BuildingShader;
+import shaderslmfao.BuildingShaders;
+
 var trainMoving:Bool = false;
 var trainFrameTiming:Float = 0;
 
@@ -6,6 +9,7 @@ var trainFinishing:Bool = false;
 var trainCooldown:Int = 0;
 
 var curLight:Int = 0;
+var lightFadeShader:BuildingShaders;
 
 var phillyCityLights:FlxTypedGroup<FlxSprite>;
 var phillyTrain:FlxSprite;
@@ -70,7 +74,7 @@ function create()
     add(city);
 
     lightFadeShader = new BuildingShaders();
-    phillyCityLights = new FlxTypedGroup<FlxSprite>();
+    phillyCityLights = new FlxTypedGroup<FlxSprite>;
 
     add(phillyCityLights);
 
