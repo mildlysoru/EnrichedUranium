@@ -1,3 +1,6 @@
+flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.effects.chainable.FlxWaveMode;
+
 function create()
 {
     var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);

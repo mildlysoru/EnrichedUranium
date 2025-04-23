@@ -2498,9 +2498,6 @@ class PlayState extends MusicBeatState
 		stage.stepHit();
 	}
 
-	var lightningStrikeBeat:Int = 0;
-	var lightningOffset:Int = 8;
-
 	override function beatHit()
 	{
 		super.beatHit();

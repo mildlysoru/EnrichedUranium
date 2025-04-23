@@ -1,5 +1,5 @@
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import TankmenBG;
 import flixel.FlxG;
 

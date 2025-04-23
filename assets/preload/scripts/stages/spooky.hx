@@ -1,7 +1,8 @@
 var halloweenBG:FlxSprite;
-var isHalloween:Bool = false;
+var isHalloween:Bool = true;
 
 var lightningStrikeBeat:Int = 0;
+var lightningOffset:Int = 8;
 
 function create()
 {

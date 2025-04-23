@@ -59,8 +59,11 @@ class Stage extends FlxGroup
         if (stage == null || stage == "")
             stage = "stage";
         final getText:String->String = sys.io.File.getContent;
-        var importText = "import PlayState;\nimport BGSprite;";
+        var importText = "import PlayState;\nimport BGSprite;\nimport flixel.FlxSprite;\nimport Paths;\nimport flixel.FlxG;";
 		script = new Iris(importText + getText(Paths.script("stages/"+stage)));
+		script.set("add", add);
+        script.set("remove", remove);
+        script.set("insert", insert);
 		script.execute();
     }
 
