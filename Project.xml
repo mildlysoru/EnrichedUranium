@@ -40,7 +40,8 @@
 
 	<classpath name="source" />
 
-	<!-- <assets path='assets/preload/music' include="*mp4" embed='false' /> -->
+	<assets path='assets/preload/videos' include="*.mp4"/>
+	<assets path='assets/preload/scripts' include="*.hx"/>
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
@@ -110,7 +111,7 @@
 		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
 		NOT USING A DIRECT THING TO THE ASSET!!!
 	-->
-	<assets path="assets/fonts" embed='true'/>
+	<assets path="assets/fonts" embed='false'/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
@@ -125,6 +126,7 @@
 	<!--haxelib name="newgrounds" unless="switch"/> -->
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
+	<haxelib name="hscript-iris"/>
 	<haxelib name="hxCodec" if="cpp"/>
 	<!--<haxelib name="newgrounds"/>-->
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
@@ -174,6 +176,7 @@
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	<haxedef name="hscriptPos"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 

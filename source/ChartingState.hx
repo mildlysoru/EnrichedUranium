@@ -132,6 +132,7 @@ class ChartingState extends MusicBeatState
 				needsVoices: true,
 				player1: 'bf',
 				player2: 'dad',
+				stage: 'default',
 				speed: 1,
 				validScore: false
 			};
@@ -349,7 +350,7 @@ class ChartingState extends MusicBeatState
 		});
 		player1DropDown.selectedLabel = _song.player1;
 
-		var player2DropDown = new FlxUIDropDownMenu(140, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var player2DropDown = new FlxUIDropDownMenu(180, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
 			updateHeads();
@@ -614,6 +615,20 @@ class ChartingState extends MusicBeatState
 
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
+
+		/*
+		if (FlxG.overlap(strumLine,curRenderedNotes) && FlxG.sound.music.playing)
+			{
+				curRenderedNotes.forEach(function(note:Note)
+					{
+						if (strumLine.x == note.x)
+						{
+							FlxG.sound.play(Paths.sound('hitNoteOpponent'));
+						}
+					}
+				);
+			}
+		*/
 
 		if (FlxG.mouse.justPressed)
 		{

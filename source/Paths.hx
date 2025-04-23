@@ -60,9 +60,9 @@ class Paths
 		return getPath('data/$key.txt', TEXT, library);
 	}
 
-	inline static public function hx(key:String, ?library:String)
+	inline static public function script(key:String, ?library:String)
 	{
-		return getPath('data/$key.hx', TEXT, library);
+		return getPath('scripts/$key.hx', TEXT, library);
 	}
 
 	inline static public function xml(key:String, ?library:String)
