@@ -11,7 +11,7 @@ var trainCooldown:Int = 0;
 var curLight:Int = 0;
 var lightFadeShader:BuildingShaders;
 
-var phillyCityLights:FlxTypedGroup<FlxSprite>;
+var phillyCityLights:FlxGroup;
 var phillyTrain:FlxSprite;
 var trainSound:FlxSound;
 
@@ -74,7 +74,7 @@ function create()
     add(city);
 
     lightFadeShader = new BuildingShaders();
-    phillyCityLights = new FlxTypedGroup<FlxSprite>;
+    phillyCityLights = new FlxGroup();
 
     add(phillyCityLights);
 
@@ -126,14 +126,14 @@ function beatHit()
     if (!trainMoving)
         trainCooldown += 1;
 
-    if (PlayState.curBeat % 4 == 0)
+    if (curBeat % 4 == 0)
     {
         lightFadeShader.reset();
 
-        phillyCityLights.forEach(function(light:FlxSprite)
+        for (light in phillyCityLights)
         {
             light.visible = false;
-        });
+        };
 
         curLight = FlxG.random.int(0, phillyCityLights.length - 1);
 
@@ -141,7 +141,7 @@ function beatHit()
         // phillyCityLights.members[curLight].alpha = 1;
     }
 
-    if (PlayState.curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
+    if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
     {
         trainCooldown = FlxG.random.int(-4, 0);
         trainStart();

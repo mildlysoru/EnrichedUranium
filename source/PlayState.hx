@@ -68,9 +68,9 @@ class PlayState extends MusicBeatState
 	private var vocals:FlxSound;
 	private var vocalsFinished:Bool = false;
 
-	private var dad:Character;
-	private var gf:Character;
-	private var boyfriend:Boyfriend;
+	public var dad:Character;
+	public var gf:Character;
+	public var boyfriend:Boyfriend;
 
 	private var notes:FlxTypedGroup<Note>;
 	private var unspawnNotes:Array<Note> = [];
@@ -85,7 +85,7 @@ class PlayState extends MusicBeatState
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
-	private var curSong:String = "";
+	public var curSong:String = "";
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
@@ -268,6 +268,8 @@ class PlayState extends MusicBeatState
 		}
 
 		stage = new Stage(curStage);
+		stage.script.set("curBeat",curBeat);
+		stage.script.set("curStep",curStep);
 		add(stage);
 		stage.create();
 
@@ -2483,6 +2485,8 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
+		stage.script.set("curStep", curStep);
+
 		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
 			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
 		{
@@ -2500,6 +2504,7 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+		stage.script.set("curBeat", curBeat);
 
 		if (generatedMusic)
 		{

@@ -1,7 +1,9 @@
+import BackgroundDancer;
+
 var fastCarCanDrive:Bool = true;
 
 var limo:FlxSprite;
-var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
+var grpLimoDancers:FlxGroup;
 var fastCar:FlxSprite;
 
 function resetFastCar():Void
@@ -39,7 +41,7 @@ function create()
     bgLimo.scrollFactor.set(0.4, 0.4);
     add(bgLimo);
 
-    grpLimoDancers = new FlxTypedGroup<BackgroundDancer>();
+    grpLimoDancers = new FlxGroup();
     add(grpLimoDancers);
 
     for (i in 0...5)
@@ -70,8 +72,14 @@ function create()
     add(limo);
 }
 
+function createPost()
+{
+    add(fastCar);
+}
+
 function beatHit()
 {
+    /*
     if (ui.PreferencesMenu.getPref('camera-zoom'))
     {
         if (PlayState.curSong.toLowerCase() == 'milf' && PlayState.curBeat >= 168 && PlayState.curBeat < 200 && PlayState.camZooming && FlxG.camera.zoom < 1.35)
@@ -86,11 +94,12 @@ function beatHit()
             PlayState.camHUD.zoom += 0.03;
         }
     }
+    */
 
-    grpLimoDancers.forEach(function(dancer:BackgroundDancer)
+    for (dancer in grpLimoDancers)
     {
         dancer.dance();
-    });
+    };
 
     if (FlxG.random.bool(10) && fastCarCanDrive)
         fastCarDrive();

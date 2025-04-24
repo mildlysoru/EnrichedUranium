@@ -1,5 +1,5 @@
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxGroup.FlxTypedGroup;
+//import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import TankmenBG;
 import flixel.FlxG;
 import flixel.math.FlxAngle;
@@ -10,13 +10,13 @@ var tankAngle:Float = FlxG.random.int(-90, 45);
 var tankSpeed:Float = FlxG.random.float(5, 7);
 var tankX:Float = 400;
 
-var tankmanRun:FlxTypedGroup<TankmenBG>;
+var tankmanRun:FlxGroup;
 var gfCutsceneLayer:FlxGroup;
 var bfTankCutsceneLayer:FlxGroup;
 var tankWatchtower:BGSprite;
-var tankGround:BGSprite;
+var tankRolling:BGSprite;
 
-var foregroundSprites:FlxTypedGroup<BGSprite>;
+var foregroundSprites:FlxGroup;
 
 function create()
 {
@@ -56,15 +56,16 @@ function create()
     tankWatchtower = new BGSprite('tankWatchtower', 100, 50, 0.5, 0.5, ['watchtower gradient color']);
     add(tankWatchtower);
 
-    tankGround = new BGSprite('tankRolling', 300, 300, 0.5, 0.5, ['BG tank w lighting'], true);
-    add(tankGround);
+    tankRolling = new BGSprite('tankRolling', 300, 300, 0.5, 0.5, ['BG tank w lighting'], true);
+    add(tankRolling);
     // tankGround.active = false;
 
-    var tempTankman:TankmenBG = new TankmenBG(20, 500, true);
-    tempTankman.strumTime = 10;
-    tempTankman.resetShit(20, 600, true);
-    tankmanRun.add(tempTankman);
+    //var tempTankman:TankmenBG = new TankmenBG(20, 500, true);
+    //tempTankman.strumTime = 10;
+    //tempTankman.resetShit(20, 600, true);
+    //tankmanRun.add(tempTankman);
 
+    /*
     for (i in 0...TankmenBG.animationNotes.length)
     {
         if (FlxG.random.bool(16))
@@ -76,13 +77,15 @@ function create()
             tankmanRun.add(tankman);
         }
     }
+    */
 
-    add(tankmanRun);
+    //add(tankmanRun);
 
     var tankGround:BGSprite = new BGSprite('tankGround', -420, -150);
     tankGround.setGraphicSize(Std.int(tankGround.width * 1.15));
     tankGround.updateHitbox();
     add(tankGround);
+
 
     moveTank();
 
@@ -96,7 +99,7 @@ function update(elapsed:Float)
 
 function postCreate()
 {
-    //foregroundSprites = new FlxTypedGroup<BGSprite>;
+    foregroundSprites = new FlxGroup();
 
     var fgTank0:BGSprite = new BGSprite('tank0', -500, 650, 1.7, 1.5, ['fg']);
     foregroundSprites.add(fgTank0);
@@ -123,21 +126,21 @@ function postCreate()
 function beatHit()
 {
     tankWatchtower.dance();
-    foregroundSprites.forEach(function(spr:BGSprite)
+    for (spr in foregroundSprites)
     {
         spr.dance();
-    });
+    }
 }
 
-function moveTank():Void
+function moveTank()
 {
     if (!PlayState.inCutscene)
     {
         var daAngleOffset:Float = 1;
         tankAngle += FlxG.elapsed * tankSpeed;
-        tankGround.angle = tankAngle - 90 + 15;
+        tankRolling.angle = tankAngle - 90 + 15;
 
-        tankGround.x = tankX + Math.cos(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1500;
-        tankGround.y = 1300 + Math.sin(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1100;
+        tankRolling.x = tankX + Math.cos(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1500;
+        tankRolling.y = 1300 + Math.sin(FlxAngle.asRadians((tankAngle * daAngleOffset) + 180)) * 1100;
     }
 }

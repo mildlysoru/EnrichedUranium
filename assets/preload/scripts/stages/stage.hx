@@ -25,12 +25,12 @@ function create()
 
 function beatHit()
 {
-    if (PlayState.curBeat % 8 == 7 && PlayState.curSong == 'Bopeebo')
+    if (curBeat % 8 == 7 && PlayState.curSong == 'Bopeebo')
     {
         PlayState.boyfriend.playAnim('hey', true);
     }
 
-    if (PlayState.curBeat % 16 == 15 && PlayState.curSong == 'Tutorial' && PlayState.dad.curCharacter == 'gf' && PlayState.curBeat > 16 && PlayState.curBeat < 48)
+    if (curBeat % 16 == 15 && PlayState.curSong == 'Tutorial' && PlayState.dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
     {
         PlayState.boyfriend.playAnim('hey', true);
         PlayState.dad.playAnim('cheer', true);

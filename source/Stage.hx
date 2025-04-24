@@ -49,11 +49,12 @@ import ui.PreferencesMenu;
 import hxcodec.flixel.FlxVideo;
 import BGSprite;
 import BackgroundGirls;
-
-var script:Iris;
+import BackgroundDancer;
 
 class Stage extends FlxGroup
 {
+    public var script:Iris;
+
     public function new(stage:String)
     {
         super();
@@ -65,6 +66,7 @@ class Stage extends FlxGroup
 		script.set("add", add);
         script.set("remove", remove);
         script.set("insert", insert);
+        script.set("FlxGroup", FlxGroup);
 		script.execute();
     }
 

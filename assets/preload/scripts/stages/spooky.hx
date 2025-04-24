@@ -1,3 +1,5 @@
+import MusicBeatState;
+
 var halloweenBG:FlxSprite;
 var isHalloween:Bool = true;
 
@@ -19,7 +21,7 @@ function create()
 
 function beatHit()
 {
-    if (FlxG.random.bool(10) && PlayState.curBeat > lightningStrikeBeat + lightningOffset)
+    if (FlxG.random.bool(10) && curBeat > lightningStrikeBeat + lightningOffset)
     {
         lightningStrikeShit();
     }
