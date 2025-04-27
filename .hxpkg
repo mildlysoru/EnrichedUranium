@@ -1,0 +1,57 @@
+[
+	{
+		"profile": "default",
+		"pkgs": [
+			{
+				"name": "lime",
+				"link": "https://github.com/lavycat/lime.git",
+				"branch": "836ac815d1cf13e34626d77b359818af794f3c90"
+			},
+			{
+				"name": "openfl",
+				"version": "9.4.1"
+			},
+			{
+				"name": "flixel",
+				"version": "6.0.0"
+			},
+			{
+				"name": "flixel-addons",
+				"version": "3.3.2"
+			},
+			{
+				"name": "flixel-ui",
+				"version": "2.6.4"
+			},
+			{
+				"name": "hxCodec",
+				"link": "https://github.com/polybiusproxy/hxCodec.git",
+				"branch": "0a51aed0d9523d22a83e453ce7b593ec7fed4742"
+			},
+			{
+				"name": "hscript",
+				"link": "https://github.com/HaxeFoundation/hscript.git",
+				"branch": "3300ce047ab157d84b92b43f5ff17961e9d7279e"
+			},
+			{
+				"name": "hscript-iris",
+				"link": "https://github.com/pisayesiwsi/hscript-iris.git",
+				"branch": "8867c9a801a051e2bc5f9c03f06e8f88e6c574f9"
+			},
+			{
+				"name": "format",
+				"version": "3.8.0"
+			},
+			{
+				"name": "hxp",
+				"link": "https://github.com/openfl/hxp.git",
+				"branch": "1fa646f71e85c42a486a74fc528a03b62452d83d"
+			},
+			{
+				"name": "hxcpp",
+				"link": "https://github.com/HaxeFoundation/hxcpp.git",
+				"branch": "bee2492257e19b8ef8a29be775bdcf805d8daf84"
+			}
+		]
+	}
+]
